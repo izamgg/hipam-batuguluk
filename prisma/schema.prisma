@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id       Int     @id @default(autoincrement())
+  username String  @unique
+  email    String? @unique
+  password String
+  nama     String
+}
+
+model Pelanggan {
+  id       Int        @id @default(autoincrement())
+  nama     String
+  alamat   String
+  noHp     String?
+  kwitansi Kwitansi[]
+}
+
+model Kwitansi {
+  id           Int       @id @default(autoincrement())
+  noKwitansi   String    @unique
+  tanggalBayar DateTime  @db.Date
+  bulanPeriode String
+  standAwal    Int
+  standAkhir   Int
+  pemakaian    Int
+  tarif        Int
+  totalPerM2   Int
+  totalBayar   Int
+  pelangganId  Int
+  pelanggan    Pelanggan @relation(fields: [pelangganId], references: [id], onDelete: Restrict)
+
+  @@index([pelangganId])
+  @@index([tanggalBayar])
+}
+
+model Pengaturan {
+  id             Int      @id @default(1)
+  namaAplikasi   String   @default("HIPAM Batuguluk")
+  namaOrganisasi String   @default("HIPAM Batuguluk Foundation")
+  alamat         String   @default("")
+  updatedAt      DateTime @updatedAt
+}
