@@ -39,7 +39,7 @@ model Kwitansi {
 
   @@index([pelangganId])
   @@index([tanggalBayar])
-}
+ }
 
 model Pengaturan {
   id             Int      @id @default(1)
@@ -47,4 +47,4 @@ model Pengaturan {
   namaOrganisasi String   @default("HIPAM Batuguluk Foundation")
   alamat         String   @default("")
   updatedAt      DateTime @updatedAt
-}
+ }
